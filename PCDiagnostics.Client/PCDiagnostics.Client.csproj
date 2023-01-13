@@ -12,4 +12,8 @@
     <Content Include="diagnostic.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Management" Version="7.0.0" />
+  </ItemGroup>
+
 </Project>

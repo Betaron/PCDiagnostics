@@ -8,4 +8,9 @@ public partial class MainWindow : Window
 	{
 		InitializeComponent();
 	}
+
+	private void Specs_Loaded(object sender, RoutedEventArgs e)
+	{
+
+	}
 }
