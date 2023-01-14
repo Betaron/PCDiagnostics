@@ -15,7 +15,7 @@
 	<Grid>
 		<TabControl>
 			<TabItem Header="Specifications">
-				<tabs:Specs Loaded="Specs_Loaded"/>
+				<tabs:Specs/>
 			</TabItem>
 			<TabItem Header="History">
 				<tabs:History/>
