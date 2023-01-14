@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Management;
+using System.Timers;
+using LibreHardwareMonitor.Hardware;
 using PCDiagnostics.Client.Models;
 using PCDiagnostics.Client.ViewModels.Base;
 
@@ -8,6 +12,7 @@ namespace PCDiagnostics.Client.ViewModels;
 public class SpecsViewModel : BaseViewModel
 {
 	private List<Device>? _devices;
+	private Dictionary<string, string>? _temperatures;
 
 	public List<Device>? Devices
 	{
@@ -15,9 +20,19 @@ public class SpecsViewModel : BaseViewModel
 		set => Set(ref _devices, value);
 	}
 
+	public Dictionary<string, string>? Temperatures
+	{
+		get => _temperatures;
+		set => Set(ref _temperatures, value);
+	}
+
 	public SpecsViewModel()
 	{
 		Devices = GetDevisesList();
+
+		System.Timers.Timer timer = new(1000);
+		timer.Elapsed += new System.Timers.ElapsedEventHandler(RequestTemperatures);
+		timer.Start();
 	}
 
 	private static ManagementObjectCollection GetDevicesByClassName(string FromWIN32Class)
@@ -26,6 +41,11 @@ public class SpecsViewModel : BaseViewModel
 				 new ManagementObjectSearcher("SELECT * FROM " + FromWIN32Class);
 
 		return searcher.Get();
+	}
+
+	private void RequestTemperatures(object? sender, ElapsedEventArgs e)
+	{
+		Temperatures = GetTemperatures();
 	}
 
 	public static List<Device> GetDevisesList()
@@ -39,6 +59,7 @@ public class SpecsViewModel : BaseViewModel
 			foreach (var device in devices)
 			{
 				Dictionary<string, string> specs = new();
+				Debug.WriteLine(device.GetText(TextFormat.Mof));
 				foreach (var prop in pattern.Properties!)
 					specs.Add(prop, device[prop.Replace(" ", "")]?.ToString() ?? string.Empty);
 
@@ -50,5 +71,28 @@ public class SpecsViewModel : BaseViewModel
 			}
 		}
 		return result;
+	}
+
+	public static Dictionary<string, string> GetTemperatures()
+	{
+		Computer computer = new()
+		{
+			IsCpuEnabled = true,
+			IsGpuEnabled = true,
+		};
+
+		computer.Open();
+
+		Dictionary<string, string> temps = new();
+
+		foreach (IHardware hardware in computer.Hardware)
+		{
+			var tempSensors = hardware.Sensors.Where(s => s.SensorType == SensorType.Temperature).ToList();
+			var temp = tempSensors.Count > 0 ? tempSensors[0].Value.ToString() : null;
+			if (string.IsNullOrEmpty(temp))
+				temp = "unknown";
+			temps.Add(hardware.Name, temp!);
+		}
+		return temps;
 	}
 }
