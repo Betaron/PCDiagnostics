@@ -13,7 +13,7 @@ public class SpecsViewModel : BaseViewModel
 {
 	private List<Device>? _devices;
 	private Dictionary<string, string>? _temperatures;
-	private string _login = "ABOBUS";
+	private string _login;
 
 	public List<Device>? Devices
 	{
