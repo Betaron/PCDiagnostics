@@ -54,7 +54,8 @@
 													Margin="8, -2, 0, 0" 
 													Width="20" 
 													BorderBrush="Transparent" 
-													Background="Transparent"/>
+													Background="Transparent"
+													Click="Copy_Click"/>
 										</StackPanel>
 									</DataTemplate>
 								</ListBox.ItemTemplate>
