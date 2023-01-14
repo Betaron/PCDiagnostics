@@ -13,6 +13,7 @@ public class SpecsViewModel : BaseViewModel
 {
 	private List<Device>? _devices;
 	private Dictionary<string, string>? _temperatures;
+	private string _login = "ABOBUS";
 
 	public List<Device>? Devices
 	{
@@ -24,6 +25,12 @@ public class SpecsViewModel : BaseViewModel
 	{
 		get => _temperatures;
 		set => Set(ref _temperatures, value);
+	}
+
+	public string Login
+	{
+		get => _login;
+		set => Set(ref _login, value);
 	}
 
 	public SpecsViewModel()
