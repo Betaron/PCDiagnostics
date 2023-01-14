@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Timers;
+using System.Windows.Input;
 using LibreHardwareMonitor.Hardware;
 using PCDiagnostics.Client.Models;
 using PCDiagnostics.Client.ViewModels.Base;
@@ -14,6 +15,8 @@ public class SpecsViewModel : BaseViewModel
 	private List<Device>? _devices;
 	private Dictionary<string, string>? _temperatures;
 	private string _login;
+
+	public ICommand RefreshCommand { get; private set; }
 
 	public List<Device>? Devices
 	{
@@ -35,11 +38,18 @@ public class SpecsViewModel : BaseViewModel
 
 	public SpecsViewModel()
 	{
-		Devices = GetDevisesList();
+		RefreshDevices();
 
 		System.Timers.Timer timer = new(1000);
 		timer.Elapsed += new System.Timers.ElapsedEventHandler(RequestTemperatures);
 		timer.Start();
+
+		RefreshCommand = new RelayCommand(RefreshDevices);
+	}
+
+	public void RefreshDevices(object obj = null)
+	{
+		Devices = GetDevisesList();
 	}
 
 	private static ManagementObjectCollection GetDevicesByClassName(string FromWIN32Class)
