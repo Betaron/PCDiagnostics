@@ -2,15 +2,13 @@
 
 public interface IDeviceRepository
 {
-	Task<Device> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-
-	Task<IEnumerable<Device>> GetAllAsync(CancellationToken cancellationToken);
+	Task<IEnumerable<Device>> GetAllWithDiagnosticIdAsync(Guid diagnosticId, CancellationToken cancellationToken);
 
 	Task CreateAsync(Device device, CancellationToken cancellationToken);
 
-	Task UpdateAsync(Device device, CancellationToken cancellationToken);
+	Task UpdateAsync(Device device, Guid diagnosticId, string name, CancellationToken cancellationToken);
 
-	Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+	Task DeleteAsync(Guid diagnosticId, string name, CancellationToken cancellationToken);
 
-	Task<bool> ExistsByIdAsync(Guid id, CancellationToken cancellationToken);
+	Task<bool> ExistsByPK(Guid diagnosticId, string name, CancellationToken cancellationToken);
 }
