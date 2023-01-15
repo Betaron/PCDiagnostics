@@ -13,7 +13,11 @@
 		<viewModels:MainWindowViewModel/>
 	</Window.DataContext>
 	<Grid>
-		<TabControl>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="32"/>
+		</Grid.RowDefinitions>
+		<TabControl Grid.Row="0">
 			<TabItem Header="Specifications">
 				<tabs:Specs/>
 			</TabItem>
@@ -21,5 +25,10 @@
 				<tabs:History/>
 			</TabItem>
 		</TabControl>
+		<StackPanel Grid.Row="1" Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
+			<TextBlock Text="{Binding Login}" Margin="0, 0, 16, 0" FontSize="14" Foreground="Orange"/>
+			<Button Content="LogIn" Margin="0, 0, 4, 0" Width="100"/>
+			<Button Content="SignIn" Margin="0, 0, 4, 0" Width="100"/>
+		</StackPanel>
 	</Grid>
 </Window>
