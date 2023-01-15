@@ -4,9 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PCDiagnostics.Client"
+		xmlns:models="clr-namespace:PCDiagnostics.Client.Models"
+		xmlns:viewModels="clr-namespace:PCDiagnostics.Client.ViewModels"
+		xmlns:tabs="clr-namespace:PCDiagnostics.Client.Views.Tabs"
         mc:Ignorable="d"
-        Title="PC Diagnostics" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="{Binding Title}" Height="450" Width="800">
+	<Window.DataContext>
+		<viewModels:MainWindowViewModel/>
+	</Window.DataContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="32"/>
+		</Grid.RowDefinitions>
+		<TabControl Grid.Row="0">
+			<TabItem Header="Specifications">
+				<tabs:Specs/>
+			</TabItem>
+			<TabItem Header="History">
+				<tabs:History/>
+			</TabItem>
+		</TabControl>
+		<StackPanel Grid.Row="1" Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
+			<TextBlock Text="{Binding Login}" Margin="0, 0, 16, 0" FontSize="14" Foreground="Orange"/>
+			<Button Content="LogIn" Margin="0, 0, 4, 0" Width="100"/>
+			<Button Content="SignIn" Margin="0, 0, 4, 0" Width="100"/>
+		</StackPanel>
+	</Grid>
 </Window>
