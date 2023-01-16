@@ -27,13 +27,13 @@ public class DeviceController
 		}, cancellationToken);
 	}
 
-	[HttpDelete("{id}/{name}")]
-	public Task Delete(Guid id, string name, CancellationToken cancellationToken)
+	[HttpDelete("{diagnosticId}/{name}")]
+	public Task Delete(Guid diagnosticId, string name, CancellationToken cancellationToken)
 	{
-		return _deviceService.DeleteAsync(id, name, cancellationToken);
+		return _deviceService.DeleteAsync(diagnosticId, name, cancellationToken);
 	}
 
-	[HttpGet("diagnostic-id/{id}")]
+	[HttpGet("diagnostic-id/{diagnosticId}")]
 	public async Task<IEnumerable<DeviceDto>> GetAllDevicesByDiagnosticId(
 		Guid diagnosticId, CancellationToken cancellationToken)
 	{
@@ -48,13 +48,13 @@ public class DeviceController
 		});
 	}
 
-	[HttpGet("primary-key/{id}/{name}")]
+	[HttpGet("primary-key/{diagnosticId}/{name}")]
 	public Task<bool> ExistsByPK(Guid diagnosticId, string name, CancellationToken cancellationToken)
 	{
 		return _deviceService.ExistsByPK(diagnosticId, name, cancellationToken);
 	}
 
-	[HttpPut("{id}/{name}")]
+	[HttpPut("{diagnosticId}/{name}")]
 	public Task Update(DeviceDto model, Guid diagnosticId, string name, CancellationToken cancellationToken)
 	{
 		return _deviceService.UpdateAsync(new Device()
