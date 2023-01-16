@@ -45,8 +45,8 @@ public class Startup
 			c.RoutePrefix = string.Empty;
 		});
 
-
 		app.UseMiddleware<ExceptionMiddleware>();
+		app.UseMiddleware<AuthMiddleware>();
 		app.UseHttpsRedirection();
 		app.UseRouting();
 		app.UseEndpoints(endpoints => endpoints.MapControllers());

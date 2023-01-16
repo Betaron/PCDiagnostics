@@ -10,59 +10,73 @@
 	<UserControl.DataContext>
 		<viewModels:HistoryViewModel/>
 	</UserControl.DataContext>
-	<ScrollViewer CanContentScroll="False" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-		<StackPanel>
-			<WrapPanel Orientation="Horizontal" Margin="2">
-				<Button Content="Refresh ↻" Margin="0, 0, 4, 0" Width="100" Command="{Binding RefreshCommand}"/>
-			</WrapPanel>
-			<ListBox ItemsSource="{Binding Diagnostics}" Margin="2">
-				<ListBox.ItemTemplate>
-					<DataTemplate>
-						<Expander FontSize="14" Header="{Binding Id}">
-							<StackPanel>
-								<TextBlock FontSize="14" Margin="4, 0, 0, 0">
-									<TextBlock.Text>
-										<MultiBinding StringFormat="{}{0}">
-											<Binding Path="CheckTime" />
-										</MultiBinding>
-									</TextBlock.Text>
-								</TextBlock>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="32"/>
+		</Grid.RowDefinitions>
+		<ScrollViewer Grid.Row="0" CanContentScroll="False" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+			<StackPanel>
+				<WrapPanel Orientation="Horizontal" Margin="2">
+					<Button Content="Refresh ↻" Margin="0, 0, 4, 0" Width="100" Command="{Binding RefreshCommand}"/>
+				</WrapPanel>
+				<ListBox ItemsSource="{Binding Diagnostics}" Margin="2">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Expander FontSize="14" Header="{Binding Id}">
+								<StackPanel>
+									<TextBlock FontSize="14" Margin="4, 0, 0, 0">
+										<TextBlock.Text>
+											<MultiBinding StringFormat="{}{0}">
+												<Binding Path="CheckTime" />
+											</MultiBinding>
+										</TextBlock.Text>
+									</TextBlock>
 									<ListBox ItemsSource="{Binding Devices}" Margin="2">
-									<ListBox.ItemTemplate>
-										<DataTemplate>
-											<Expander Header="{Binding Name}" FontSize="14">
-												<ListBox ItemsSource="{Binding Specs}" Margin="20, 10, 0, 5">
-													<ListBox.ItemTemplate>
-														<DataTemplate>
-															<StackPanel Orientation="Horizontal">
-																<TextBlock  FontSize="14">
-																	<TextBlock.Text>
-																		<MultiBinding StringFormat="{}{0}: {1}">
-																			<Binding Path="Key" />
-																			<Binding Path="Value" />
-																		</MultiBinding>
-																	</TextBlock.Text>
-																</TextBlock>
-																<Button Content="⧉" 
+										<ListBox.ItemTemplate>
+											<DataTemplate>
+												<Expander Header="{Binding Name}" FontSize="14">
+													<ListBox ItemsSource="{Binding Specs}" Margin="20, 10, 0, 5">
+														<ListBox.ItemTemplate>
+															<DataTemplate>
+																<StackPanel Orientation="Horizontal">
+																	<TextBlock  FontSize="14">
+																		<TextBlock.Text>
+																			<MultiBinding StringFormat="{}{0}: {1}">
+																				<Binding Path="Key" />
+																				<Binding Path="Value" />
+																			</MultiBinding>
+																		</TextBlock.Text>
+																	</TextBlock>
+																	<Button Content="⧉" 
 													FontSize="14" 
 													Margin="8, -2, 0, 0" 
 													Width="20" 
 													BorderBrush="Transparent" 
 													Background="Transparent"
 													Click="Copy_Click"/>
-															</StackPanel>
-														</DataTemplate>
-													</ListBox.ItemTemplate>
-												</ListBox>
-											</Expander>
-										</DataTemplate>
-									</ListBox.ItemTemplate>
-								</ListBox>
-							</StackPanel>
-						</Expander>
-					</DataTemplate>
-				</ListBox.ItemTemplate>
-			</ListBox>
+																</StackPanel>
+															</DataTemplate>
+														</ListBox.ItemTemplate>
+													</ListBox>
+												</Expander>
+											</DataTemplate>
+										</ListBox.ItemTemplate>
+									</ListBox>
+								</StackPanel>
+							</Expander>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</StackPanel>
+		</ScrollViewer>
+		<StackPanel Grid.Row="1" Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
+			<WrapPanel>
+				<TextBlock Text="Login" Margin="10, 0, 10, 0"/>
+				<TextBox Text="{Binding Login}" Width="100" Margin="10, 0, 10, 0"/>
+				<TextBlock Text="Key" Margin="10, 0, 10, 0"/>
+				<TextBox Text="{Binding Key}" Width="100" Margin="10, 0, 10, 0"/>
+			</WrapPanel>
 		</StackPanel>
-	</ScrollViewer>
+	</Grid>
 </UserControl>

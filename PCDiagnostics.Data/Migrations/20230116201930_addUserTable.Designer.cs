@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PCDiagnostics.Data;
@@ -12,9 +13,11 @@ using PCDiagnostics.Data;
 namespace PCDiagnostics.Data.Migrations
 {
     [DbContext(typeof(PCDiagnosticsContext))]
-    partial class PCDiagnosticsContextModelSnapshot : ModelSnapshot
+    [Migration("20230116201930_addUserTable")]
+    partial class addUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

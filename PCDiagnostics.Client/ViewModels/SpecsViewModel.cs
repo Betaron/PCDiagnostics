@@ -17,7 +17,6 @@ public class SpecsViewModel : BaseViewModel
 {
 	private List<Device>? _devices;
 	private Dictionary<string, string>? _temperatures;
-	private string _login;
 
 	public ICommand RefreshCommand { get; private set; }
 	public ICommand SendDiagnosticCommand { get; private set; }
@@ -32,12 +31,6 @@ public class SpecsViewModel : BaseViewModel
 	{
 		get => _temperatures;
 		set => Set(ref _temperatures, value);
-	}
-
-	public string Login
-	{
-		get => _login;
-		set => Set(ref _login, value);
 	}
 
 	public SpecsViewModel()

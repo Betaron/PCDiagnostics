@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using PCDiagnostics.Data.DbModels.Devices;
 using PCDiagnostics.Data.DbModels.Diagnostics;
+using PCDiagnostics.Data.DbModels.Users;
 
 namespace PCDiagnostics.Data;
 
@@ -9,6 +10,7 @@ public class PCDiagnosticsContext : DbContext
 {
 	public DbSet<DeviceDbModel> Devices { get; set; }
 	public DbSet<DiagnosticDbModel> Diagnostics { get; set; }
+	public DbSet<UserDbModel> Users { get; set; }
 
 	public PCDiagnosticsContext(DbContextOptions options) : base(options) { }
 

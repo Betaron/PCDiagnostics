@@ -11,6 +11,22 @@ namespace PCDiagnostics.Client.ViewModels;
 public class HistoryViewModel : BaseViewModel
 {
 	private List<Diagnostic>? _diagnostics;
+	private string _login;
+	private string _key;
+
+	public string Login
+	{
+		get => _login;
+		set => Set(ref _login, value);
+	}
+
+	public string Key
+	{
+		get => _key;
+		set => Set(ref _key, value);
+	}
+
+	public string AuthLine { get => _login + ":" + _key; }
 
 	public ICommand RefreshCommand { get; private set; }
 
@@ -28,7 +44,7 @@ public class HistoryViewModel : BaseViewModel
 	public void GetHistory(object obj = null)
 	{
 		var diagnostics = Requests.ServerRequest<IEnumerable<DiagnosticDto>>(
-			$"http://localhost:5001/diagnostic", method: "GET")?
+			$"http://localhost:5001/diagnostic", method: "GET", authLine: AuthLine)?
 			.Select(it => new Diagnostic
 			{
 				Id = it.Id,
@@ -42,7 +58,7 @@ public class HistoryViewModel : BaseViewModel
 		foreach (var diagnostic in diagnostics)
 		{
 			devices.Add(Requests.ServerRequest<IEnumerable<DeviceDto>>(
-				$"http://localhost:5001/device/diagnostic-id/{diagnostic.Id}", method: "GET")?
+				$"http://localhost:5001/device/diagnostic-id/{diagnostic.Id}", method: "GET", authLine: AuthLine)?
 				.Select(it => new Device()
 				{
 					Name = it.Name,
