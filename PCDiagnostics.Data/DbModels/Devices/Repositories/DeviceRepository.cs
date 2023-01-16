@@ -62,7 +62,8 @@ public class DeviceRepository : IDeviceRepository
 			throw new ObjectNotFoundException(
 				message: $"Device - {name} from {diagnosticId} diagnostic not found.");
 
-		DeviceDbModel deviceDbModel = new(device);
-		await _context.AddAsync(deviceDbModel, cancellationToken);
+		entity.Name = device.Name;
+		entity.DiagnosticId = device.DiagnosticId;
+		entity.Specs = device.Specs;
 	}
 }
