@@ -17,12 +17,18 @@ public class DiagnosticController
 	}
 
 	[HttpPost]
-	public Task Create(CreateDiagnosticDto model, CancellationToken cancellationToken)
+	public async Task<DiagnosticDto> Create(DiagnosticDto model, CancellationToken cancellationToken)
 	{
-		return _diagnosticService.CreateAsync(new Diagnostic()
+		var res = await _diagnosticService.CreateAsync(new Diagnostic()
 		{
 			CheckTime = model.CheckTime
 		}, cancellationToken);
+
+		return new DiagnosticDto()
+		{
+			Id = res.Id,
+			CheckTime = res.CheckTime
+		};
 	}
 
 	[HttpDelete("{id}")]

@@ -37,16 +37,14 @@ public class Startup
 
 	public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
 	{
-		if (environment.IsDevelopment())
+		app.UseDeveloperExceptionPage();
+		app.UseSwagger();
+		app.UseSwaggerUI(c =>
 		{
-			app.UseDeveloperExceptionPage();
-			app.UseSwagger();
-			app.UseSwaggerUI(c =>
-			{
-				c.SwaggerEndpoint($"/swagger/{Ver}/swagger.json", $"PCDiagnostics.Web {Ver}");
-				c.RoutePrefix = string.Empty;
-			});
-		}
+			c.SwaggerEndpoint($"/swagger/{Ver}/swagger.json", $"PCDiagnostics.Web {Ver}");
+			c.RoutePrefix = string.Empty;
+		});
+
 
 		app.UseMiddleware<ExceptionMiddleware>();
 		app.UseHttpsRedirection();

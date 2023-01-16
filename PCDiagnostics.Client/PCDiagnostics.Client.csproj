@@ -17,4 +17,8 @@
     <PackageReference Include="System.Management" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PCDiagnostics.Web\PCDiagnostics.Web.csproj" />
+  </ItemGroup>
+
 </Project>

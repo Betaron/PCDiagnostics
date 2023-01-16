@@ -6,7 +6,7 @@ public interface IDiagnosticService
 
 	Task<IEnumerable<Diagnostic>> GetAllAsync(CancellationToken cancellationToken);
 
-	Task CreateAsync(Diagnostic diagnostic, CancellationToken cancellationToken);
+	Task<Diagnostic> CreateAsync(Diagnostic diagnostic, CancellationToken cancellationToken);
 
 	Task UpdateAsync(Diagnostic diagnostic, Guid id, CancellationToken cancellationToken);
 

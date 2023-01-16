@@ -14,7 +14,7 @@
 		<StackPanel>
 			<WrapPanel Orientation="Horizontal" Margin="2">
 				<Button Content="Refresh ↻" Margin="0, 0, 4, 0" Width="100" Command="{Binding RefreshCommand}"/>
-				<Button Content="Send to Server" Margin="0, 0, 4, 0" Width="100"/>
+				<Button Content="Send to Server" Margin="0, 0, 4, 0" Width="100" Command="{Binding SendDiagnosticCommand}"/>
 			</WrapPanel>
 			<ListBox ItemsSource="{Binding Temperatures}" Margin="2">
 				<ListBox.ItemTemplate>

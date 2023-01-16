@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
@@ -7,6 +8,8 @@ using System.Windows.Input;
 using LibreHardwareMonitor.Hardware;
 using PCDiagnostics.Client.Models;
 using PCDiagnostics.Client.ViewModels.Base;
+using PCDiagnostics.Web.Controllers.Devices.Dto;
+using PCDiagnostics.Web.Controllers.Diagnostics.Dto;
 
 namespace PCDiagnostics.Client.ViewModels;
 
@@ -17,6 +20,7 @@ public class SpecsViewModel : BaseViewModel
 	private string _login;
 
 	public ICommand RefreshCommand { get; private set; }
+	public ICommand SendDiagnosticCommand { get; private set; }
 
 	public List<Device>? Devices
 	{
@@ -45,11 +49,34 @@ public class SpecsViewModel : BaseViewModel
 		timer.Start();
 
 		RefreshCommand = new RelayCommand(RefreshDevices);
+		SendDiagnosticCommand = new RelayCommand(SendDiagnostic);
 	}
 
 	public void RefreshDevices(object obj = null)
 	{
 		Devices = GetDevisesList();
+	}
+
+	private void SendDiagnostic(object obj = null)
+	{
+		var diagnostic = Requests.ServerRequest<DiagnosticDto>(
+			$"http://localhost:5001/diagnostic",
+			new DiagnosticDto()
+			{
+				CheckTime = DateTime.UtcNow,
+			}, method: "POST");
+		foreach (var device in Devices)
+		{
+			Requests.ServerRequest<DeviceDto>(
+			$"http://localhost:5001/device",
+			new DeviceDto()
+			{
+				DiagnosticId = diagnostic!.Id,
+				Name = device.Name,
+				Specs = device.Specs
+			},
+			method: "POST");
+		}
 	}
 
 	private static ManagementObjectCollection GetDevicesByClassName(string FromWIN32Class)

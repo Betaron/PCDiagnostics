@@ -15,10 +15,12 @@ public class DiagnosticService : IDiagnosticService
 		_unitOfWork = unitOfWork;
 	}
 
-	public async Task CreateAsync(Diagnostic diagnostic, CancellationToken cancellationToken)
+	public async Task<Diagnostic> CreateAsync(Diagnostic diagnostic, CancellationToken cancellationToken)
 	{
+		diagnostic.Id = Guid.NewGuid();
 		await _diagnosticRepository.CreateAsync(diagnostic, cancellationToken);
 		await _unitOfWork.SaveChangesAsync();
+		return diagnostic;
 	}
 
 	public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
