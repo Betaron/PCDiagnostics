@@ -13,6 +13,8 @@ public class DiagnosticDbModel
 	/* navigation properties */
 	public List<DeviceDbModel>? Devices { get; set; }
 
+	public DiagnosticDbModel() { }
+
 	public DiagnosticDbModel(Diagnostic coreDiagnostic)
 	{
 		Id = coreDiagnostic.Id;
