@@ -8,7 +8,7 @@ public interface IDiagnosticRepository
 
 	Task CreateAsync(Diagnostic diagnostic, CancellationToken cancellationToken);
 
-	Task UpdateAsync(Diagnostic diagnostic, CancellationToken cancellationToken);
+	Task UpdateAsync(Diagnostic diagnostic, Guid id, CancellationToken cancellationToken);
 
 	Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 

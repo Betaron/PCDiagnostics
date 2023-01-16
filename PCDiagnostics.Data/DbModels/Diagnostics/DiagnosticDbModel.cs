@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PCDiagnostics.Core.Domains.Diagnostics;
 using PCDiagnostics.Data.DbModels.Devices;
 
 namespace PCDiagnostics.Data.DbModels.Diagnostics;
@@ -11,6 +12,12 @@ public class DiagnosticDbModel
 
 	/* navigation properties */
 	public List<DeviceDbModel>? Devices { get; set; }
+
+	public DiagnosticDbModel(Diagnostic coreDiagnostic)
+	{
+		Id = coreDiagnostic.Id;
+		CheckTime = coreDiagnostic.CheckTime;
+	}
 
 	internal class Map : IEntityTypeConfiguration<DiagnosticDbModel>
 	{
