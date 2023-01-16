@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using PCDiagnostics.Core;
 using PCDiagnostics.Data;
 using PCDiagnostics.Web.HostedServices;
+using PCDiagnostics.Web.Middlewares;
 
 namespace PCDiagnostics.Web;
 
@@ -47,9 +48,9 @@ public class Startup
 			});
 		}
 
+		app.UseMiddleware<ExceptionMiddleware>();
 		app.UseHttpsRedirection();
 		app.UseRouting();
 		app.UseEndpoints(endpoints => endpoints.MapControllers());
 	}
-
 }
