@@ -5,20 +5,26 @@ namespace PCDiagnostics.Core.Domains.Diagnostics.Services;
 public class DiagnosticService : IDiagnosticService
 {
 	private readonly IDiagnosticRepository _diagnosticRepository;
+	private readonly IUnitOfWork _unitOfWork;
 
-	public DiagnosticService(IDiagnosticRepository diagnosticRepository)
+	public DiagnosticService(
+		IDiagnosticRepository diagnosticRepository,
+		IUnitOfWork unitOfWork)
 	{
 		_diagnosticRepository = diagnosticRepository;
+		_unitOfWork = unitOfWork;
 	}
 
-	public Task CreateAsync(Diagnostic diagnostic, CancellationToken cancellationToken)
+	public async Task CreateAsync(Diagnostic diagnostic, CancellationToken cancellationToken)
 	{
-		return _diagnosticRepository.CreateAsync(diagnostic, cancellationToken);
+		await _diagnosticRepository.CreateAsync(diagnostic, cancellationToken);
+		await _unitOfWork.SaveChangesAsync();
 	}
 
-	public Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+	public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
 	{
-		return _diagnosticRepository.DeleteAsync(id, cancellationToken);
+		await _diagnosticRepository.DeleteAsync(id, cancellationToken);
+		await _unitOfWork.SaveChangesAsync();
 	}
 
 	public Task<IEnumerable<Diagnostic>> GetAllAsync(CancellationToken cancellationToken)
@@ -31,8 +37,9 @@ public class DiagnosticService : IDiagnosticService
 		return _diagnosticRepository.GetByIdAsync(id, cancellationToken);
 	}
 
-	public Task UpdateAsync(Diagnostic diagnostic, Guid id, CancellationToken cancellationToken)
+	public async Task UpdateAsync(Diagnostic diagnostic, Guid id, CancellationToken cancellationToken)
 	{
-		return _diagnosticRepository.UpdateAsync(diagnostic, id, cancellationToken);
+		await _diagnosticRepository.UpdateAsync(diagnostic, id, cancellationToken);
+		await _unitOfWork.SaveChangesAsync();
 	}
 }
