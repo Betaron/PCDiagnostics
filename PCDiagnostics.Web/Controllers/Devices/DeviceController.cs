@@ -48,7 +48,7 @@ public class DeviceController
 		});
 	}
 
-	[HttpGet("primary-key/{diagnosticId}/{name}")]
+	[HttpGet("primary-key/exists/{diagnosticId}/{name}")]
 	public Task<bool> ExistsByPK(Guid diagnosticId, string name, CancellationToken cancellationToken)
 	{
 		return _deviceService.ExistsByPK(diagnosticId, name, cancellationToken);
