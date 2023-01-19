@@ -1,0 +1,14 @@
+﻿namespace PCDiagnostics.Core.Domains.Diagnostics.Services;
+
+public interface IDiagnosticService
+{
+	Task<Diagnostic> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+
+	Task<IEnumerable<Diagnostic>> GetAllAsync(CancellationToken cancellationToken);
+
+	Task<Diagnostic> CreateAsync(Diagnostic diagnostic, CancellationToken cancellationToken);
+
+	Task UpdateAsync(Diagnostic diagnostic, Guid id, CancellationToken cancellationToken);
+
+	Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+}

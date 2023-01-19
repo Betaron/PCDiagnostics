@@ -12,4 +12,13 @@
     <Content Include="diagnostic.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.1" />
+    <PackageReference Include="System.Management" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PCDiagnostics.Web\PCDiagnostics.Web.csproj" />
+  </ItemGroup>
+
 </Project>

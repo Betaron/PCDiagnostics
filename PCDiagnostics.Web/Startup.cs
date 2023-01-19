@@ -1,5 +1,9 @@
 ﻿using System.Reflection;
 using System.Text.Json.Serialization;
+using PCDiagnostics.Core;
+using PCDiagnostics.Data;
+using PCDiagnostics.Web.HostedServices;
+using PCDiagnostics.Web.Middlewares;
 
 namespace PCDiagnostics.Web;
 
@@ -26,24 +30,25 @@ public class Startup
 			var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 			options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 		});
+
+		services.AddData(Configuration).AddCore();
+		services.AddHostedService<MigrationHostedService>();
 	}
 
 	public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
 	{
-		if (environment.IsDevelopment())
+		app.UseDeveloperExceptionPage();
+		app.UseSwagger();
+		app.UseSwaggerUI(c =>
 		{
-			app.UseDeveloperExceptionPage();
-			app.UseSwagger();
-			app.UseSwaggerUI(c =>
-			{
-				c.SwaggerEndpoint($"/swagger/{Ver}/swagger.json", $"PCDiagnostics.Web {Ver}");
-				c.RoutePrefix = string.Empty;
-			});
-		}
+			c.SwaggerEndpoint($"/swagger/{Ver}/swagger.json", $"PCDiagnostics.Web {Ver}");
+			c.RoutePrefix = string.Empty;
+		});
 
+		app.UseMiddleware<ExceptionMiddleware>();
+		app.UseMiddleware<AuthMiddleware>();
 		app.UseHttpsRedirection();
 		app.UseRouting();
 		app.UseEndpoints(endpoints => endpoints.MapControllers());
 	}
-
 }
